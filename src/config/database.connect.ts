@@ -1,4 +1,4 @@
-import { connect } from "mongoose";
+import { connect, disconnect } from "mongoose";
 import { env } from "./environment.variables";
 
 export function connectDb() {
@@ -11,4 +11,8 @@ export function connectDb() {
 
     return connection;
   });
+}
+
+export function diconnectDb() {
+  return disconnect();
 }

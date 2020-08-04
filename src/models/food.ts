@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
-interface IFood extends Document {
+export interface IFood {
   foodCode: number;
   displayName: string;
   portionDefault: number;
@@ -29,11 +29,12 @@ interface IFood extends Document {
   saturatedFats: number;
 }
 
+interface IFoodDoc extends Document {}
+
 const FoodSchema = new Schema(
   {
     foodCode: {
       type: Number,
-      unique: true,
     },
     displayName: {
       type: String,
@@ -114,4 +115,4 @@ const FoodSchema = new Schema(
   { timestamps: true }
 );
 
-export const Food = model<IFood>("Food", FoodSchema);
+export const Food = model<IFoodDoc>("Food", FoodSchema);

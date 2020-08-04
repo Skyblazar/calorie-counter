@@ -1,1 +1,1 @@
-export { Food } from "./food";
+export { Food, IFood } from "./food";
