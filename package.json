@@ -10,11 +10,16 @@
     "start": "node .",
     "start:dev": "nodemon src/app.ts",
     "build": "rm -rf dist && tsc -p .",
-    "test": "jest"
+    "test": "jest",
+    "extract": "ts-node src/data/extract-data.ts"
   },
   "dependencies": {
+    "@types/mongoose": "^5.7.34",
+    "csv-parser": "^2.3.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "helmet": "^4.0.0"
+    "helmet": "^4.0.0",
+    "mongoose": "^5.9.27"
   },
   "devDependencies": {
     "@types/express": "^4.17.7",

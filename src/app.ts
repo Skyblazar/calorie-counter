@@ -1,9 +1,13 @@
 import express from "express";
 import helmet from "helmet";
+
 import { ResponsePayload, HttpStatus } from "./common";
+import { connectDb, env } from "./config";
 
 const app = express();
 app.use(helmet());
+
+connectDb();
 
 app.get("/", (req, res) => {
   res.json(
@@ -23,4 +27,4 @@ app.use((req, res) => {
   );
 });
 
-app.listen(7000, () => console.log("Server listening on port 7000"));
+app.listen(env.port, () => console.log(`Server listening on port ${env.port}`));
