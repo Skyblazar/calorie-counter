@@ -1,0 +1,29 @@
+{
+  "name": "calorie-counter",
+  "version": "0.0.1",
+  "description": "Backend | Count the number of calories in a meal",
+  "main": "dist/app.js",
+  "repository": "git@github.com:elishaking/calorie-counter.git",
+  "author": "King Elisha <ek.chibueze@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node .",
+    "start:dev": "nodemon src/app.ts",
+    "build": "rm -rf dist && tsc -p .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.0.0",
+    "jest": "^26.2.2",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.1.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.7",
+    "@types/node": "^14.0.27",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}
