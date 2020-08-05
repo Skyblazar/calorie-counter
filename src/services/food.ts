@@ -1,8 +1,18 @@
 import { Food } from "../models";
 
+const PER_PAGE = 20;
+
 class FoodService {
-  findAll() {
-    return Food.findOne().lean();
+  async find(page = 0) {
+    const foods = await Food.find()
+      .skip(page * PER_PAGE)
+      .limit(20)
+      .lean();
+    return {
+      perPage: 20,
+      page,
+      foods,
+    };
   }
 
   search(query: string) {
@@ -23,7 +33,7 @@ class FoodService {
         (err, results) => {
           if (err) return reject(err);
 
-          resolve(results);
+          resolve(results.hits.hits);
         }
       );
     });

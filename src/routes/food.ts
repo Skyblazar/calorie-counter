@@ -6,12 +6,13 @@ import { ResponsePayload, HttpStatus } from "../common";
 export const foodRouter = Router();
 
 foodRouter.get("/", async (req, res) => {
-  const foods = await foodService.findAll();
+  const page = +(req.query.page || 0);
+  const data = await foodService.find(page);
 
   res.json(
     new ResponsePayload({
       statusCode: HttpStatus.OK,
-      data: foods,
+      data,
     })
   );
 });
