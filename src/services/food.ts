@@ -13,7 +13,13 @@ class FoodService {
             query,
           },
         },
-        { hydrate: true },
+        {
+          hydrate: true,
+          hydrateOptions: {
+            lean: true,
+            select: "-factor -incrementF -multiplier -createdAt -updatedAt",
+          },
+        },
         (err, results) => {
           if (err) return reject(err);
 
