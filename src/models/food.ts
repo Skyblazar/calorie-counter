@@ -1,4 +1,5 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Model } from "mongoose";
+const mongoosastic = require("mongoosastic");
 
 export interface IFood {
   foodCode: number;
@@ -31,6 +32,15 @@ export interface IFood {
 
 interface IFoodDoc extends Document {}
 
+interface ISearchQuery {
+  query_string?: {
+    query: string;
+  };
+}
+interface IFoodModel extends Model<IFoodDoc> {
+  search: (query: ISearchQuery, cb: (err: any, results: any) => void) => any;
+}
+
 const FoodSchema = new Schema(
   {
     foodCode: {
@@ -38,6 +48,7 @@ const FoodSchema = new Schema(
     },
     displayName: {
       type: String,
+      es_indexed: true,
     },
     portionDefault: {
       type: Number,
@@ -47,6 +58,7 @@ const FoodSchema = new Schema(
     },
     portionDisplayName: {
       type: String,
+      es_indexed: true,
     },
     factor: {
       type: Number,
@@ -115,4 +127,16 @@ const FoodSchema = new Schema(
   { timestamps: true }
 );
 
-export const Food = model<IFoodDoc>("Food", FoodSchema);
+FoodSchema.plugin(mongoosastic);
+FoodSchema.static("search", () => {});
+
+export const Food = model<IFoodDoc, IFoodModel>("Food", FoodSchema);
+
+// Food.search(
+//   {
+//     query_string: {
+//       query: "King",
+//     },
+//   },
+//   (err, results) => {}
+// );
