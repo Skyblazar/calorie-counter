@@ -38,7 +38,11 @@ interface ISearchQuery {
   };
 }
 interface IFoodModel extends Model<IFoodDoc> {
-  search: (query: ISearchQuery, cb: (err: any, results: any) => void) => any;
+  search: (
+    query: ISearchQuery,
+    options: any,
+    cb: (err: any, results: any) => void
+  ) => any;
 }
 
 const FoodSchema = new Schema(
@@ -128,15 +132,5 @@ const FoodSchema = new Schema(
 );
 
 FoodSchema.plugin(mongoosastic);
-FoodSchema.static("search", () => {});
 
 export const Food = model<IFoodDoc, IFoodModel>("Food", FoodSchema);
-
-// Food.search(
-//   {
-//     query_string: {
-//       query: "King",
-//     },
-//   },
-//   (err, results) => {}
-// );

@@ -3,6 +3,7 @@ import helmet from "helmet";
 
 import { ResponsePayload, HttpStatus } from "./common";
 import { connectDb, env } from "./config";
+import { foodRouter } from "./routes";
 
 const app = express();
 app.use(helmet());
@@ -17,6 +18,8 @@ app.get("/", (req, res) => {
     })
   );
 });
+
+app.use("/foods", foodRouter);
 
 app.use((req, res) => {
   res.json(
