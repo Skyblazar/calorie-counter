@@ -14,6 +14,8 @@ These are some of the software required to run this application:
 
 - Nodejs `(>= 10.x.x)`
 - Yarn `(>= 1.x.x)`
+- ElasticSearch `(>= 7.x.x)`
+- MongoDB `(>= 4.x.x)`
 
 ### Installation
 
@@ -25,7 +27,7 @@ These are the steps to get the app up and running
   yarn install
   ```
 
-- Run the application:
+  - Run the application (develoment):
 
   ```sh
   yarn start:dev
@@ -39,6 +41,8 @@ These are some of the software required to **build** and run this application in
 
 - Nodejs `(>= 10.x.x)`
 - Yarn `(>= 1.x.x)`
+- ElasticSearch `(>= 7.x.x)`
+- MongoDB `(>= 4.x.x)`
 
 ### Steps
 
@@ -54,7 +58,7 @@ These are some of the software required to **build** and run this application in
   yarn build
   ```
 
-- Run the application:
+- Run the application (production):
 
   ```sh
   yarn start
