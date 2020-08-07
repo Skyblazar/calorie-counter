@@ -4,9 +4,11 @@ import helmet from "helmet";
 import { ResponsePayload, HttpStatus } from "./common";
 import { connectDb, env } from "./config";
 import { foodRouter } from "./routes";
+import { allowCrossDomain } from "./utils";
 
 const app = express();
 app.use(helmet());
+app.use(allowCrossDomain);
 
 connectDb();
 

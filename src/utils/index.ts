@@ -1,0 +1,1 @@
+export { allowCrossDomain } from "./cors";
