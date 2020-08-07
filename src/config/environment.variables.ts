@@ -9,7 +9,7 @@ const getDBUrl = (): string => {
   if (nodeEnv === "development") return process.env.DB_URL_DEV || "";
   if (nodeEnv === "test") return process.env.DB_URL_TEST || "";
 
-  return process.env.DB_URL_PROD || "";
+  return process.env.DATABASE_URL || "";
 };
 
 export const env = {
