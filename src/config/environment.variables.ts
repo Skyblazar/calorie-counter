@@ -12,10 +12,30 @@ const getDBUrl = (): string => {
   return process.env.MONGODB_URI || "";
 };
 
+const getElasticSearchCredentials = (url: string) => {
+  const split1 = url.split("://");
+  const protocol = split1[0];
+  const uri1 = split1[1];
+  const split2 = uri1.split("@");
+  const auth = split2[0];
+  const uri2 = split2[1];
+  const split3 = uri2.split(":");
+  const host = split3[0];
+  const port = split3[1];
+
+  return {
+    host,
+    port,
+    protocol,
+    auth,
+  };
+};
+
 export const env = {
   nodeEnv,
   port: +(process.env.PORT || 7000),
   database: {
     url: getDBUrl(),
   },
+  elasticSearchOpts: getElasticSearchCredentials(process.env.BONSAI_URL || ""),
 };

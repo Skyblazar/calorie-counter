@@ -1,4 +1,5 @@
 import { Schema, model, Document, Model } from "mongoose";
+import { env } from "../config";
 const mongoosastic = require("mongoosastic");
 
 export interface IFood {
@@ -131,6 +132,8 @@ const FoodSchema = new Schema(
   { timestamps: true }
 );
 
-FoodSchema.plugin(mongoosastic);
+if (env.nodeEnv === "production")
+  FoodSchema.plugin(mongoosastic, env.elasticSearchOpts);
+else FoodSchema.plugin(mongoosastic);
 
 export const Food = model<IFoodDoc, IFoodModel>("Food", FoodSchema);
