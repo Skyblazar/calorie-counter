@@ -13,6 +13,8 @@ const getDBUrl = (): string => {
 };
 
 const getElasticSearchCredentials = (url: string) => {
+  if (url === "") return;
+
   const split1 = url.split("://");
   const protocol = split1[0];
   const uri1 = split1[1];
@@ -21,13 +23,14 @@ const getElasticSearchCredentials = (url: string) => {
   const uri2 = split2[1];
   const split3 = uri2.split(":");
   const host = split3[0];
-  const port = split3[1];
+  const port = +split3[1];
 
   return {
     host,
     port,
     protocol,
     auth,
+    curlDebug: true,
   };
 };
 

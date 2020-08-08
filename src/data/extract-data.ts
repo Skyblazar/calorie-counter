@@ -5,6 +5,8 @@ import csv from "csv-parser";
 import { connectDb, diconnectDb } from "../config";
 import { Food, IFood } from "../models";
 
+const ONE_SECOND = 1000;
+
 function setFood(food: any): IFood {
   return {
     foodCode: +food.Food_Code,
@@ -36,6 +38,25 @@ function setFood(food: any): IFood {
   };
 }
 
+async function saveAndIndexData(foods: any[]) {
+  for (let i = 0; i < foods.length; i++) {
+    try {
+      await Food.create(setFood(foods[i]));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+}
+
+function batchSave(foods: any[]) {
+  return new Promise(async (resolve, reject) => {
+    await saveAndIndexData(foods);
+    setTimeout(() => {
+      resolve(true);
+    }, ONE_SECOND);
+  });
+}
+
 function extractData() {
   return new Promise((resolve, reject) => {
     connectDb().then(() => {
@@ -44,20 +65,27 @@ function extractData() {
         .pipe(csv())
         .on("data", (chunk) => foods.push(chunk))
         .on("end", async () => {
-          for (let i = 0; i < foods.length; i++) {
-            try {
-              await Food.create(setFood(foods[i]));
-            } catch (err) {
-              console.error(err);
-            }
+          const splitFoods = [];
+          let j = 0;
+          for (let i = 0; i < foods.length; i += 30) {
+            splitFoods[j] = foods.slice(i, i + 30);
+            j++;
           }
+
+          for (let i = 0; i < splitFoods.length; i++) {
+            await batchSave(splitFoods[i]);
+            console.log("Finished batch: " + i);
+          }
+
           resolve(foods);
         });
     });
   });
 }
 
-extractData().then(() => {
-  console.log("Data extracted and saved");
-  diconnectDb();
-});
+extractData()
+  .then(() => {
+    console.log("Data extracted and saved");
+    return diconnectDb();
+  })
+  .then(() => console.log("disconnected"));

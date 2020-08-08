@@ -44,6 +44,7 @@ interface IFoodModel extends Model<IFoodDoc> {
     options: any,
     cb: (err: any, results: any) => void
   ) => any;
+  createMapping: (cb: (err: any, mapping: any) => void) => any;
 }
 
 const FoodSchema = new Schema(
@@ -137,3 +138,13 @@ if (env.nodeEnv === "production")
 else FoodSchema.plugin(mongoosastic);
 
 export const Food = model<IFoodDoc, IFoodModel>("Food", FoodSchema);
+
+Food.createMapping(function (err, mapping) {
+  if (err) {
+    console.log("error creating mapping (you can safely ignore this)");
+    console.log(err);
+  } else {
+    console.log("mapping created!");
+    console.log(mapping);
+  }
+});
